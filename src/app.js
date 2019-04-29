@@ -1,46 +1,60 @@
-class Drone {
-    //  comment goes here
-    constructor(id, name) {
-        this._id = id;      // _ indicates a 'private' variable
-        this._name = name;
-        //  console.log(`in Drone constructor method - ${this.id} ${this.name}`);
-    }
+class Vehicle { 
+    
+    // constructor() {   -- inheriting properties
+    //     this.gpsEnabled = true;
+    // }
 
-    static getCompany() {  // ONLY WORKS FOR THE CLASS
-        console.log('in getCompany');
-    }
+    // constructor(licenseNum) { -- inheriting constructors
+    //     this.licenseNum = licenseNum;
+    //     console.log('Constructing Vehicle');
+    // }
 
-    get id() {
-        console.log("in id getter");
-        return this._id + ' TEMP';
-    }
+    // start() {                                -- inheriting methods
+    //     console.log('Starting vehicle...');
+    // }
 
-    set id(value) {
-        this._id = value;
-    }
-
-    fly() {
-        console.log(`Drone ${this.id} is flying....`);
-    }
+    // static getCompanyName() {
+    //     console.log('My Company');
+    // }
 
 }
-Drone.maxHeight = 2000; // static or class properties
-Drone.getCompany();
 
-let drone = new Drone('A123', 'Flyer');
-drone.id = 'C789';
-let drone2 = new Drone('B456', 'Twirl');
 
-//  console.log( 'Drone = ' + drone.id + ' ' + drone.name );
-//  console.log(  drone.id + ' | ' + drone2.id);
-//  console.log(drone.maxHeight + ' | ' + drone2.maxHeight); // doesnt work as not part of instances
+class Car extends Vehicle {
+    
+    // constructor() {  -- inheriting properties
+    //     super();
+    //     this.gpsEnabled = false;
+    // }
 
-drone.fly();
-drone2.fly();
+    // constructor(licenseNum) {  -- inheriting constructors
+    //     super(licenseNum);
+    // }
 
-// console.log(typeof Drone);
-// console.log(typeof drone);
-// console.log( drone instanceof Drone );
+    // start() {                                -- inheriting methods
+    //     super.start();
+    //     console.log('Starting car...');
+    //     super.start();
+    // }
 
-// let droneId = 5;
-// console.log('created in App.js - ', droneId);
+    // static getCompanyName() {
+    //     super.getCompanyName();
+    //     console.log('My Other Company');
+    // }
+
+}
+
+let c = new Car();
+// c.start();                                   -- inheriting methods
+// Car.getCompanyName();
+//  c.getCompanyName(); -- errors
+
+// let c = new Car();   -- inheriting properties
+// console.log(c.gpsEnabled);
+
+// let c = new Car('SA14CZU'); // executes the constructor
+// console.log(c.licenseNum);  -- inheriting constructors
+
+// console.log( c instanceof Car );
+// console.log( c instanceof  Vehicle );
+// console.log( c instanceof Object );
