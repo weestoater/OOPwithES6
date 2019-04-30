@@ -1,12 +1,6 @@
-import {
-    Car
-} from '../classes/car.js';
-import {
-    Drone
-} from '../classes/drone.js';
-import {
-    DataError
-} from './data-error.js';
+import { Car } from '../classes/car.js';
+import { Drone } from '../classes/drone.js';
+import { DataError } from './data-error.js';
 
 export class FleetDataService {
 
@@ -18,12 +12,12 @@ export class FleetDataService {
     //  Data
     loadData(fleet) {
         //  console.log('Loaded from FDS: ' + fleet);
-        for (let data of fleet) {
-            switch (data.type) {
+        for (let data of fleet ){
+            switch(data.type) {
                 case 'car':
                     if (this.validateCarData(data)) {
                         let car = this.loadCar(data);
-                        if (car)
+                        if(car) 
                             this.cars.push(car);
                     } else {
                         let e = new DataError('Invalid car data', data);
@@ -58,9 +52,9 @@ export class FleetDataService {
     validateCarData(car) {
         let requiredProps = 'license model latLong miles make'.split(' ');
         let hasErrors = false;
-
+        
         for (let field of requiredProps) {
-            if (!car[field]) {
+            if(!car[field]) {
                 this.errors.push(new DataError(`invalid field ${field}`, car));
                 hasErrors = true;
             }
@@ -76,14 +70,14 @@ export class FleetDataService {
     }
 
     getCarByLicense(license) {
-        return this.cars.find(function (car) {
+        return this.cars.find(function(car) {
             return car.license === license;
         })
     }
 
     getCarsSortedByLicense() {
-        return this.cars.sort(function (car1, car2) {
-            if (car1.license < car2.license)
+        return this.cars.sort(function(car1, car2) {
+            if(car1.license < car2.license) 
                 return -1;
             if (car1.license > car2.license)
                 return 1;
@@ -92,7 +86,7 @@ export class FleetDataService {
     }
 
     filterCarsByMake(filter) {
-        return this.cars.filter(car => car.make.indexOf(filter) >= 0);
+        return this.cars.filter(car => car.make.indexOf(filter) >= 0 );
     }
 
     //  Drone methods
@@ -109,27 +103,3 @@ export class FleetDataService {
     }
 
 }
-
-//------------------------------------------------  IN APP FILE
-let dataService = new FleetDataService();
-dataService.loadData(fleet);
-
-let car = dataService.getCarByLicense('AT9900');
-console.log(car);
-
-let sortedCars = dataService.getCarsSortedByLicense();
-for (let car of sortedCars)
-    console.log(car.license);
-
-let filteredCars = dataService.filterCarsByMake('e');
-for (let car of filteredCars)
-    console.log(car.make);
-
-for (let car of dataService.cars)
-    console.log('Car licenses - ' + car.license);
-
-for (let drone of dataService.drones)
-    console.log('Drone licenses - ' + drone.license);
-
-for (let e of dataService.errors)
-    console.log('Errors  - ' + e.message);
